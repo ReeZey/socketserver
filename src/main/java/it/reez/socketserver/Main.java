@@ -55,7 +55,7 @@ public class Main {
                             String s = String.valueOf((preview));
                             String rpin = s.substring(0,4);
                             if(players.containsKey(rpin)){
-                                System.out.println("it.reez.socketserver.Rover "+ rpin + " executed " + s.substring(4,8));
+                                System.out.println("Rover "+ rpin + " executed " + s.substring(4,8));
                                 char[] commands = s.substring(4,8).toCharArray();
 
                                 for(char cmd : commands){
@@ -84,7 +84,7 @@ public class Main {
                                                 break;
                                             case "X":
                                                 for(Map.Entry<String, Rover> rov : players.entrySet()) {
-                                                    String rover = "it.reez.socketserver.Rover "+ rov.getKey();
+                                                    String rover = "Rover "+ rov.getKey();
                                                     r = rov.getValue();
                                                     String pos = " Position x:" + r.getX() + " y:" + r.getY() + " direction:" + dir[r.getR()];
                                                     System.out.println(rover + pos);
