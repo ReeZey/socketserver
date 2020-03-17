@@ -1,2 +1,2 @@
 # socketserver
-a socket game in mars, to learn programming :)
+a socket game in mars, to learn programming or how sockets works
