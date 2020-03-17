@@ -10,7 +10,7 @@ class Mars {
 
     static void load(){
         try {
-            FileReader in = new FileReader("map.txt");
+            FileReader in = new FileReader( "map.txt");
             BufferedReader br = new BufferedReader(in);
 
             for (int r = 0; r<board.length;r++){

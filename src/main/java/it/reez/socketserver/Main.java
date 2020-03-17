@@ -12,7 +12,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class Main {
     public static void main(String[] args) {
 
-        int port = 8080;
+        int port = 1234;
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server is listening on port " + port);

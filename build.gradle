@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'it.reez.socketserver'
+version '1.0'
+
+sourceCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                'Implementation-Version': 1.8,
+                'Main-Class': 'it.reez.socketserver.Main'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
