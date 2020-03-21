@@ -20,9 +20,9 @@ public class Main {
             System.out.println("Server is listening on port " + port);
             Mars.load();
             Map<String, Rover> players = new HashMap<>();
-            players.put("5029", new Rover(4, 4, 0));
-            players.put("5025", new Rover(59, 4, 1));
-            players.put("5010", new Rover(24, 4, 3));
+            players.put("5010", new Rover(24, 4, 2, "Red"));
+            players.put("5020", new Rover(24, 6, 2, "Blue"));
+            players.put("5030", new Rover(24, 6, 2, "Purple"));
 
             while (true) {
                 Socket socket = server.accept();
@@ -32,7 +32,7 @@ public class Main {
                     StringBuilder html = new StringBuilder();
                     for(Map.Entry<String, Rover> rov : players.entrySet()) {
                         Rover r = rov.getValue();
-                        String pos = "\""+rov.getKey()+"\":{\"x\":\""+r.getX() + "\", \"y\": \"" + r.getY()+"\"},";
+                        String pos = "\""+rov.getKey()+"\":{\"x\":\""+r.getX() + "\", \"y\": \"" + r.getY()+"\", \"c\":\""+r.getC()+"\"},";
                         html.append(pos).append("\n");
                     }
                     String text = html.toString();
@@ -57,6 +57,11 @@ public class Main {
                         BufferedReader in = null;
 
                         while (!dead) {
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             try {
                                 in = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8));
                                 preview = new char[8];
@@ -100,14 +105,6 @@ public class Main {
                                                     break;
                                                 case "f":
                                                     r.forward();
-                                                    break;
-                                                case "X":
-                                                    for(Map.Entry<String, Rover> rov : players.entrySet()) {
-                                                        String rover = "Rover "+ rov.getKey();
-                                                        r = rov.getValue();
-                                                        String pos = " Position x:" + r.getX() + " y:" + r.getY() + " direction:" + dir[r.getR()];
-                                                        System.out.println(rover + pos);
-                                                    }
                                                     break;
                                             }
                                         }

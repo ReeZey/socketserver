@@ -4,11 +4,13 @@ class Rover {
     private int x;
     private int y;
     private int r;
+    private String c;
 
-    Rover(int x, int y, int r) {
+    Rover(int x, int y, int r, String c) {
         this.x = x;
         this.y = y;
         this.r = r;
+        this.c = c;
     }
 
     int getX() {
@@ -21,6 +23,10 @@ class Rover {
 
     int getR() {
         return r;
+    }
+
+    String getC(){
+        return c;
     }
 
     private void setX(int x) {
