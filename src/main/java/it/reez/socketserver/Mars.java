@@ -10,11 +10,14 @@ class Mars {
 
     static void load(){
         try {
+            //Load file
             FileReader in = new FileReader( "map.txt");
             BufferedReader br = new BufferedReader(in);
 
+            //read each row
             for (int r = 0; r<board.length;r++){
                 String row = br.readLine();
+                //read each character
                 for (int c = 0; c <board.length;c++){
                     board[r][c] = String.valueOf(row.charAt(c));
                 }
@@ -24,7 +27,7 @@ class Mars {
             e.printStackTrace();
         }
     }
-
+    //get block at y x
     static String get(int y, int x){
         return board[y][x];
     }

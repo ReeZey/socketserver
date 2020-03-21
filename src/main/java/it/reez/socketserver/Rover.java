@@ -13,30 +13,37 @@ class Rover {
         this.c = c;
     }
 
+    //get rover x
     int getX() {
         return x;
     }
 
+    //get rover y
     int getY() {
         return y;
     }
 
+    //get rover rotation
     int getR() {
         return r;
     }
 
+    //get rover color
     String getC(){
         return c;
     }
 
+    //set rover x
     private void setX(int x) {
         this.x = x;
     }
 
+    //set rover y
     private void setY(int y) {
         this.y = y;
     }
 
+    //rover turn left
     void rLeft(){
         if(this.r > 0){
             this.r--;
@@ -45,6 +52,7 @@ class Rover {
         }
     }
 
+    //rover turn right
     void rRight(){
         if(this.r < 3){
             this.r++;
@@ -53,6 +61,7 @@ class Rover {
         }
     }
 
+    //check for collision then move rover forward
     void forward(){
         if(this.r == 0){
             if(Mars.get(getY()-1,getX()).equals(".")){
@@ -73,6 +82,7 @@ class Rover {
         }
     }
 
+    //rover scan function
     String scan(int x, int y, int r){
         StringBuilder scan = new StringBuilder();
         if(r == 0){
