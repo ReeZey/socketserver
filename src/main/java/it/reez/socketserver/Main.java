@@ -23,9 +23,9 @@ public class Main {
             Mars.load();
             //Load players
             Map<String, Rover> players = new HashMap<>();
-            players.put("5010", new Rover(24, 4, 2, "Red"));
-            players.put("5020", new Rover(24, 6, 2, "Blue"));
-            players.put("5030", new Rover(24, 6, 2, "Purple"));
+            players.put("jagg", new Rover(24, 4, 0, 0,"green"));
+            players.put("drla", new Rover(26, 4, 2, 0,"red"));
+            players.put("risi", new Rover(28, 4, 2, 0,"purple"));
 
             while (true) {
                 //accept all requests
@@ -38,7 +38,7 @@ public class Main {
                     //add all rovers to the json file
                     for(Map.Entry<String, Rover> rov : players.entrySet()) {
                         Rover r = rov.getValue();
-                        String pos = "\""+rov.getKey()+"\":{\"x\":\""+r.getX() + "\", \"y\": \"" + r.getY()+"\", \"c\":\""+r.getC()+"\"},";
+                        String pos = "\""+rov.getKey()+"\":{\"x\":\""+r.getX() + "\", \"y\": \"" + r.getY()+"\", \"r\":\""+r.getDir()+"\", \"p\":\""+r.getP()+"\", \"c\":\""+r.getC()+"\"},";
                         html.append(pos).append("\n");
                     }
                     //format it
@@ -49,6 +49,7 @@ public class Main {
                     OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
                     out.write("HTTP/1.1 200 OK\r\n");
                     out.write("Content-Type: application/json\r\n");
+                    out.write("Access-Control-Allow-Origin: *\r\n");
                     out.write("\r\n");
                     out.write("{\n"+text+"}");
                     out.flush();
@@ -108,7 +109,6 @@ public class Main {
 
                                             //get rover
                                             Rover r = players.get(rpin);
-                                            String[] dir = {"N", "E", "S", "W"};
                                             switch (c) {
                                                 case "s":
                                                     String scan = r.scan(r.getX(), r.getY(), r.getR());
@@ -121,10 +121,13 @@ public class Main {
                                                     r.rLeft();
                                                     break;
                                                 case "p":
-                                                    writer.println("Position x:" + r.getX() + " y:" + r.getY() + " direction:" + dir[r.getR()]);
+                                                    writer.println("Position x:" + r.getX() + " y:" + r.getY() + " direction:" + r.getDir());
                                                     break;
                                                 case "f":
                                                     r.forward();
+                                                    break;
+                                                case "d":
+                                                    r.dig();
                                                     break;
                                             }
                                         }

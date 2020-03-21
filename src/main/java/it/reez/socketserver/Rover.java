@@ -1,15 +1,22 @@
 package it.reez.socketserver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 class Rover {
     private int x;
     private int y;
     private int r;
+    private int p;
     private String c;
+    private List<String> digged = new ArrayList<>();
 
-    Rover(int x, int y, int r, String c) {
+    Rover(int x, int y, int r, int p, String c) {
         this.x = x;
         this.y = y;
         this.r = r;
+        this.p = p;
         this.c = c;
     }
 
@@ -24,9 +31,13 @@ class Rover {
     }
 
     //get rover rotation
-    int getR() {
-        return r;
+    int getR() { return r; }
+
+    //get points
+    int getP() {
+        return p;
     }
+
 
     //get rover color
     String getC(){
@@ -41,6 +52,11 @@ class Rover {
     //set rover y
     private void setY(int y) {
         this.y = y;
+    }
+
+    //set points
+    private void setP(int p) {
+        this.p = p;
     }
 
     //rover turn left
@@ -61,22 +77,38 @@ class Rover {
         }
     }
 
+    //get block infront of player
+    private int[] getBlock(){
+        int[] block = new int[2];
+        if (this.r == 0) {
+            block = new int[]{getY() - 1, getX()};
+        } else if (this.r == 1) {
+            block = new int[]{getY(), getX() + 1};
+        } else if (this.r == 2) {
+            block = new int[]{getY() + 1, getX()};
+        } else if (this.r == 3) {
+            block = new int[]{getY(), getX() - 1};
+        }
+        return block;
+    }
+
+
     //check for collision then move rover forward
     void forward(){
         if(this.r == 0){
-            if(Mars.get(getY()-1,getX()).equals(".")){
+            if(Mars.get(getBlock()).equals(".")){
                 setY(getY()-1);
             }
         }else if(this.r == 1){
-            if(Mars.get(getY(), getX()+1).equals(".")){
+            if(Mars.get(getBlock()).equals(".")){
                 setX(getX()+1);
             }
         }else if(this.r == 2){
-            if(Mars.get(getY()+1, getX()).equals(".")){
+            if(Mars.get(getBlock()).equals(".")){
                 setY(getY()+1);
             }
         }else if(this.r == 3){
-            if(Mars.get(getY(), getX()-1).equals(".")){
+            if(Mars.get(getBlock()).equals(".")){
                 setX(getX()-1);
             }
         }
@@ -114,8 +146,33 @@ class Rover {
                 scan.append(Mars.get(y - i, x - 1));
             }
         }
-
         return scan.toString();
     }
 
+    //digging system
+    void dig() {
+        if(!this.digged.contains(Arrays.toString(getBlock()))) {
+            String block = Mars.get(getBlock());
+            switch (block) {
+                case "W":
+                    setP(getP() + 200);
+                    break;
+                case "o":
+                    setP(getP() + 1);
+                    break;
+                case "O":
+                    setP(getP() + 10);
+                    break;
+                case "S":
+                    setP(getP() + 5000);
+                    break;
+            }
+            this.digged.add(Arrays.toString(getBlock()));
+        }
+    }
+
+    String getDir(){
+        String[] dir = {"N", "E", "S", "W"};
+        return dir[getR()];
+    }
 }

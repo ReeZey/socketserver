@@ -31,4 +31,8 @@ class Mars {
     static String get(int y, int x){
         return board[y][x];
     }
+
+    static String get(int[]coords){
+        return board[coords[0]][coords[1]];
+    }
 }
