@@ -3,15 +3,19 @@ package it.reez.socketserver;
 import java.io.*;
 import java.net.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Main {
-    public static void main(String[] args) {
+    public static Map<String, Rover> players = new HashMap<>();
 
+    public static void main(String[] args) {
 
         //Socket port
         int port = 1234;
@@ -22,10 +26,11 @@ public class Main {
             //Load map
             Mars.load();
             //Load players
-            Map<String, Rover> players = new HashMap<>();
-            players.put("jagg", new Rover(24, 4, 0, "green"));
-            players.put("drla", new Rover(26, 4, 2, "red"));
-            players.put("risi", new Rover(28, 4, 2, "purple"));
+
+            players.put("jagg", new Rover(4, 4, 0, "green"));
+            players.put("drla", new Rover(4, 4, 2, "red"));
+            players.put("risi", new Rover(4, 4, 2, "purple"));
+            players.put("salu", new Rover(4, 4, 2, "black"));
 
             while (true) {
                 //accept all requests
@@ -98,7 +103,9 @@ public class Main {
                                 //check if a plyer has that pin
                                 if(players.containsKey(rpin)){
                                     //print all executions done by the client
-                                    System.out.println("Rover "+ rpin + " executed " + s.substring(4,8));
+                                    Date d = new Date();
+                                    DateFormat readFormat = new SimpleDateFormat( "HH:mm:ss SSS");
+                                    System.out.println("["+readFormat.format(d)+"] Rover "+ rpin + " executed " + s.substring(4,8));
 
                                     //add all commands to an array and fire them once each
                                     char[] commands = s.substring(4,8).toCharArray();

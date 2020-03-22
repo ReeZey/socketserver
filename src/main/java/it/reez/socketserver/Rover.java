@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static it.reez.socketserver.Main.players;
+
 class Rover {
     private int x;
     private int y;
@@ -152,21 +154,30 @@ class Rover {
     void dig() {
         if(!this.digged.contains(Arrays.toString(getBlock()))) {
             String block = Mars.get(getBlock());
-            switch (block) {
-                case "W":
-                    setP(getP() + 200);
-                    break;
-                case "o":
-                    setP(getP() + 1);
-                    break;
-                case "O":
-                    setP(getP() + 10);
-                    break;
-                case "S":
-                    setP(getP() + 5000);
-                    break;
+            if(block.equals("R")){
+                for(Rover r : players.values()){
+                    if(r.getX() == getBlock()[1] && r.getY() == getBlock()[0]){
+                        r.setP(r.getP()-(r.getP()/8));
+                        setP(getP()+r.getP()/8);
+                    }
+                }
+            }else{
+                switch (block) {
+                    case "W":
+                        setP(getP() + 200);
+                        break;
+                    case "o":
+                        setP(getP() + 1);
+                        break;
+                    case "O":
+                        setP(getP() + 10);
+                        break;
+                    case "S":
+                        setP(getP() + 5000);
+                        break;
+                }
+                this.digged.add(Arrays.toString(getBlock()));
             }
-            this.digged.add(Arrays.toString(getBlock()));
         }
     }
 

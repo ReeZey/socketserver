@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static it.reez.socketserver.Main.players;
+
 class Mars {
 
     private static String[][] board = new String [100][100];
@@ -29,11 +31,19 @@ class Mars {
     }
     //get block from y x
     static String get(int y, int x){
+        for(Rover r : players.values()){
+            if(r.getX() == x && r.getY() == y)
+                return "R";
+        }
         return board[y][x];
     }
 
     //get block from int array
     static String get(int[]coords){
+        for(Rover r : players.values()){
+            if(r.getX() == coords[1] && r.getY() == coords[0])
+                return "R";
+        }
         return board[coords[0]][coords[1]];
     }
 }
