@@ -27,11 +27,12 @@ class Mars {
             e.printStackTrace();
         }
     }
-    //get block at y x
+    //get block from y x
     static String get(int y, int x){
         return board[y][x];
     }
 
+    //get block from int array
     static String get(int[]coords){
         return board[coords[0]][coords[1]];
     }

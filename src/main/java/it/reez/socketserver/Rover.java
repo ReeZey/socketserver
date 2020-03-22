@@ -8,15 +8,14 @@ class Rover {
     private int x;
     private int y;
     private int r;
-    private int p;
     private String c;
+    private int p = 0;
     private List<String> digged = new ArrayList<>();
 
-    Rover(int x, int y, int r, int p, String c) {
+    Rover(int x, int y, int r, String c) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.p = p;
         this.c = c;
     }
 
@@ -171,6 +170,7 @@ class Rover {
         }
     }
 
+    //get direction
     String getDir(){
         String[] dir = {"N", "E", "S", "W"};
         return dir[getR()];

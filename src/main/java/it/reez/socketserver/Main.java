@@ -23,9 +23,9 @@ public class Main {
             Mars.load();
             //Load players
             Map<String, Rover> players = new HashMap<>();
-            players.put("jagg", new Rover(24, 4, 0, 0,"green"));
-            players.put("drla", new Rover(26, 4, 2, 0,"red"));
-            players.put("risi", new Rover(28, 4, 2, 0,"purple"));
+            players.put("jagg", new Rover(24, 4, 0, "green"));
+            players.put("drla", new Rover(26, 4, 2, "red"));
+            players.put("risi", new Rover(28, 4, 2, "purple"));
 
             while (true) {
                 //accept all requests
@@ -69,7 +69,7 @@ public class Main {
                         while (!dead) {
                             //manual delay to prevent spam
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(250);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -109,6 +109,8 @@ public class Main {
 
                                             //get rover
                                             Rover r = players.get(rpin);
+
+                                            //execute command
                                             switch (c) {
                                                 case "s":
                                                     String scan = r.scan(r.getX(), r.getY(), r.getR());
