@@ -1,8 +1,13 @@
 package it.reez.socketserver;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.*;
 
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -25,12 +30,32 @@ public class Main {
             System.out.println("Server is listening on port " + port);
             //Load map
             Mars.load();
-            //Load players
+            Gson gson = new Gson();
 
-            players.put("jagg", new Rover(4, 4, 0, "green"));
-            players.put("drla", new Rover(4, 4, 2, "red"));
-            players.put("risi", new Rover(4, 4, 2, "purple"));
-            players.put("salu", new Rover(4, 4, 2, "black"));
+
+            //Load players if it can't load players it will create new
+            try{
+                System.out.println("Loading players");
+                File file = new File("players.json");
+                FileInputStream fis = new FileInputStream(file);
+                byte[] data = new byte[(int) file.length()];
+                fis.read(data);
+                fis.close();
+                String str = new String(data, UTF_8);
+                Type mapType = new TypeToken<Map<String, Rover>>(){}.getType();
+                players = new Gson().fromJson(str, mapType);
+            }catch(FileNotFoundException e){
+                System.out.println("Load failed, Creating players");
+                players.put("jagg", new Rover(4, 4, 0, "green"));
+                players.put("drla", new Rover(4, 4, 0, "red"));
+                players.put("risi", new Rover(4, 4, 0, "purple"));
+                players.put("salu", new Rover(4, 4, 0, "black"));
+                Writer wr = new OutputStreamWriter(new FileOutputStream("players.json"), UTF_8);
+                wr.write(gson.toJson(players));
+                wr.close();
+            }
+
+
 
             while (true) {
                 //accept all requests
@@ -92,6 +117,7 @@ public class Main {
                             }
                             //if client didn't send anything at all, kill socket.
                             if(Arrays.equals(preview, new char[8])){
+                                savePlayers();
                                 dead = true;
                             }else{
                                 //Read message
@@ -159,6 +185,22 @@ public class Main {
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
             ex.printStackTrace();
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("i got killed");
+        }));
+    }
+
+    private static void savePlayers() {
+        System.out.println("Saving players....");
+        Gson gson = new Gson();
+        try {
+            Writer wr = new OutputStreamWriter(new FileOutputStream("players.json"), UTF_8);
+            wr.write(gson.toJson(players));
+            wr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

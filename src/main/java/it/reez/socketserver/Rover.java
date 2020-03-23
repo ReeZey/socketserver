@@ -1,12 +1,13 @@
 package it.reez.socketserver;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static it.reez.socketserver.Main.players;
 
-class Rover {
+class Rover{
     private int x;
     private int y;
     private int r;
@@ -134,10 +135,10 @@ class Rover {
             }
         }else if(r == 2){
             for(int i = -2; i<3; i++){
-                scan.append(Mars.get(y + 2, x + i));
+                scan.append(Mars.get(y + 2, x - i));
             }
             for(int i = -1; i<2; i++){
-                scan.append(Mars.get(y + 1, x + i));
+                scan.append(Mars.get(y + 1, x - i));
             }
         }else if(r == 3){
             for(int i = -2; i<3; i++){
