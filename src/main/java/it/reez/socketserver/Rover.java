@@ -1,6 +1,5 @@
 package it.reez.socketserver;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +13,7 @@ class Rover{
     private String c;
     private int p = 0;
     private List<String> digged = new ArrayList<>();
+    private List<String> move = new ArrayList<String>();
 
     Rover(int x, int y, int r, String c) {
         this.x = x;
@@ -114,6 +114,10 @@ class Rover{
                 setX(getX()-1);
             }
         }
+        for(Rover r : players.values()){
+            int[] m = {r.getX(),r.getY()};
+            r.move.add(Arrays.toString(m));
+        }
     }
 
     //rover scan function
@@ -163,21 +167,23 @@ class Rover{
                     }
                 }
             }else{
-                switch (block) {
-                    case "W":
-                        setP(getP() + 200);
-                        break;
-                    case "o":
-                        setP(getP() + 1);
-                        break;
-                    case "O":
-                        setP(getP() + 10);
-                        break;
-                    case "S":
-                        setP(getP() + 5000);
-                        break;
+                if(!block.equals(".")){
+                    switch (block) {
+                        case "W":
+                            setP(getP() + 200);
+                            break;
+                        case "o":
+                            setP(getP() + 1);
+                            break;
+                        case "O":
+                            setP(getP() + 10);
+                            break;
+                        case "S":
+                            setP(getP() + 5000);
+                            break;
+                    }
+                    this.digged.add(Arrays.toString(getBlock()));
                 }
-                this.digged.add(Arrays.toString(getBlock()));
             }
         }
     }

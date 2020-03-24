@@ -46,10 +46,10 @@ public class Main {
                 players = new Gson().fromJson(str, mapType);
             }catch(FileNotFoundException e){
                 System.out.println("Load failed, Creating players");
-                players.put("jagg", new Rover(4, 4, 0, "green"));
-                players.put("drla", new Rover(4, 4, 0, "red"));
-                players.put("risi", new Rover(4, 4, 0, "purple"));
-                players.put("salu", new Rover(4, 4, 0, "black"));
+                players.put("jagg", new Rover(50, 50, 0, "green"));
+                players.put("drla", new Rover(50, 50, 0, "red"));
+                players.put("risi", new Rover(50, 50, 0, "purple"));
+                players.put("salu", new Rover(50, 50, 0, "black"));
                 Writer wr = new OutputStreamWriter(new FileOutputStream("players.json"), UTF_8);
                 wr.write(gson.toJson(players));
                 wr.close();
