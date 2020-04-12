@@ -36,10 +36,10 @@ public class Players {
                 wr.write(gson.toJson(players));
                 wr.close();
             }
-            System.out.println(" done");
         }catch (IOException e){
             e.printStackTrace();
         }
+
         return players;
     }
 

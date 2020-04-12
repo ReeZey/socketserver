@@ -17,7 +17,10 @@ public class Window {
     public Window() {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.getContentPane().add(zoom.getUIPanel(), "North");
-        f.getContentPane().add(new JScrollPane(panel));
+        JScrollPane scroll = new JScrollPane(panel);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        scroll.getHorizontalScrollBar().setUnitIncrement(16);
+        f.getContentPane().add(scroll);
         f.setSize(800,600);
         f.setLocation(200,200);
         f.setVisible(true);
