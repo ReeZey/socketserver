@@ -17,8 +17,8 @@ import java.util.Map;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Main extends JFrame {
-    public final static int mapWidth = 799;
-    public final static int mapHeight = 600;
+    public final static int mapWidth = 8000;
+    public final static int mapHeight = 6000;
     public final static int seed = 80;
     public static String[][] map = new String[mapHeight][mapWidth];
     static Map<String, Rover> players = new HashMap<>();

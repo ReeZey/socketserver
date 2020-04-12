@@ -22,7 +22,7 @@ class ImageZoom
             imagePanel.setScale(scale);
         });
         JPanel panel = new JPanel();
-        panel.add(new JLabel("scroller"));
+        panel.add(new JLabel("Scale"));
         panel.add(spinner);
         return panel;
     }
