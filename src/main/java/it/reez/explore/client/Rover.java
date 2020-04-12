@@ -3,11 +3,13 @@ package it.reez.explore.client;
 import it.reez.explore.Main;
 import it.reez.explore.io.World;
 
+import static it.reez.explore.Main.*;
 import static it.reez.explore.Values.*;
 
 public class Rover {
     private final String password;
-    private int x = 0, y = 0, r = 0;
+    private int x = mapWidth/2, y = mapHeight/2, r = 0;
+    private boolean online = false;
 
     public Rover(String password) {
         this.password = password;
@@ -30,18 +32,27 @@ public class Rover {
     }
 
     public static Rover get(String name){
-        return Main.players.get(name);
+        return Main.getPlayers().get(name);
+    }
+
+    public boolean getOnline(){
+        return online;
+    }
+
+    public void setOnline(){
+        online = !online;
+        win.updateTitle();
     }
 
     public void forward() {
         if(!blocked()){
-            if(r == 0){
+            if(r == NORTH){
                 y--;
-            }else if(r == 1){
+            }else if(r == EAST){
                 x++;
-            }else if(r == 2){
+            }else if(r == SOUTH){
                 y++;
-            }else if(r == 3){
+            }else if(r == WEST){
                 x--;
             }
         }
@@ -49,12 +60,12 @@ public class Rover {
 
     public void rRight(){
         r++;
-        if(r > 3)
+        if(r > WEST)
             r = 0;
     }
     public void rLeft(){
         r--;
-        if(r < 0)
+        if(r < NORTH)
             r = 3;
     }
 

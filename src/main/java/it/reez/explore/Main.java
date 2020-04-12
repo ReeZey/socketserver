@@ -17,29 +17,26 @@ import java.util.Map;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Main extends JFrame {
-    public final static int mapWidth = 8000;
-    public final static int mapHeight = 6000;
-    final static int seed = 80;
+    public final static int mapWidth = 799;
+    public final static int mapHeight = 600;
+    public final static int seed = 80;
     public static String[][] map = new String[mapHeight][mapWidth];
-    public static Map<String, Rover> players = new HashMap<>();
+    static Map<String, Rover> players = new HashMap<>();
     public final static Gson gson = new Gson();
     public static float[][] noise;
     final static int port = 1234;
-    static Window win;
-
-
-
+    public static Window win;
 
     public static void main (String[] args) {
 
-        Players.load();
+        players = Players.load();
 
         noise = Noise.generateSimplexNoise(seed);
 
         World.generate();
 
         win = new Window();
-        win.setTitle("World map | Size " + mapWidth +":"+ mapHeight + " Seed:" + seed);
+        win.updateTitle();
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server is listening on port " + port);
@@ -49,14 +46,18 @@ public class Main extends JFrame {
                 byte[] buff = new byte[32];
                 InputStream input = s.getInputStream();
                 input.read(buff, 0, buff.length);
-                String id = new String(buff, UTF_8);
+                String id = new String(buff, UTF_8).trim();
 
-                ClientHandler c = new ClientHandler(s, id.trim());
+                ClientHandler c = new ClientHandler(s, id);
                 c.start();
             }
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());
             ex.printStackTrace();
         }
+    }
+
+    public static Map<String, Rover> getPlayers() {
+        return players;
     }
 }

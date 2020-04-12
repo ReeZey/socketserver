@@ -2,18 +2,20 @@ package it.reez.explore.io;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.reez.explore.Main;
 import it.reez.explore.client.Rover;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import static it.reez.explore.Main.gson;
-import static it.reez.explore.Main.players;
+import static it.reez.explore.Main.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Players {
-    public static void load() {
+    static Map<String, Rover> players;
+    public static Map<String, Rover> load() {
+        players = Main.getPlayers();
         try{
             try{
                 File file = new File("players.json");
@@ -38,9 +40,12 @@ public class Players {
         }catch (IOException e){
             e.printStackTrace();
         }
+        return players;
     }
+
     public static void save() {
         System.out.print("Saving players...");
+        players = Main.getPlayers();
         try {
             Writer wr = new OutputStreamWriter(new FileOutputStream("players.json"), UTF_8);
             wr.write(gson.toJson(players));
@@ -48,5 +53,16 @@ public class Players {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getOnline() {
+        players = Main.getPlayers();
+        int online = 0;
+        for(Rover r : players.values()){
+            if(r.getOnline()){
+                online++;
+            }
+        }
+        return online;
     }
 }

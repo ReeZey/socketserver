@@ -1,8 +1,12 @@
 package it.reez.explore.window;
 
+import it.reez.explore.io.Players;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import static it.reez.explore.Main.*;
 
 public class Window {
 
@@ -25,7 +29,7 @@ public class Window {
         });
     }
 
-    public void setTitle(String title){
-        f.setTitle(title);
+    public void updateTitle(){
+        f.setTitle("World map | Players "+ Players.getOnline() +" | Size " + mapWidth +":"+ mapHeight + " Seed:" + seed);
     }
 }

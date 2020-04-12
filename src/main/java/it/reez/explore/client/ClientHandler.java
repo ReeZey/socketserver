@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Arrays;
 
-import static it.reez.explore.Main.players;
 import static it.reez.explore.Values.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -24,13 +23,15 @@ public class ClientHandler implements Runnable {
         this.ip = s.getInetAddress().getHostAddress();
 
         String[] split = id.split(",",2);
-        this.clientName = split[0];
-        this.clientPassword = split[1];
+        clientName = split[0];
+        clientPassword = split[1];
     }
 
     public void run() {
         System.out.println("Client " + clientName + " connected!");
         writer.println("Connected.");
+
+        Rover.get(clientName).setOnline();
 
         boolean dead = false;
         while(!dead){
@@ -77,6 +78,9 @@ public class ClientHandler implements Runnable {
                 e.printStackTrace();
             }
         }
+
+        Rover.get(clientName).setOnline();
+
         System.out.println("Client " + clientName + " disconnected.");
         Players.save();
     }
@@ -89,8 +93,8 @@ public class ClientHandler implements Runnable {
         }
         System.out.println("Incomming connection");
 
-        if(players.get(clientName) != null){
-            if (t == null && players.get(clientName).getPassword().equals(clientPassword)){
+        if(Rover.get(clientName) != null){
+            if (t == null && Rover.get(clientName).getPassword().equals(clientPassword)){
                 t = new Thread (this, clientName);
                 t.start();
             }else{
