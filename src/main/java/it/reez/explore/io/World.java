@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import static it.reez.explore.Main.*;
 import static it.reez.explore.Values.*;
@@ -18,33 +19,40 @@ public class World {
                 Color c;
                 String BlockType;
                 if (noise[x][y] > 0.72) {
-                    c = new Color(92, 92, 92);
+                    c = STONE_COLOR;
                     BlockType = STONE;
                 }else if (noise[x][y] > 0.65) {
                     String o = String.valueOf(noise[x][y]);
                     if(o.length() > 3){
                         if(Integer.parseInt(o.substring(o.length()-2)) > 97){
-                            c = new Color(15, 208, 193, 255);
-                            BlockType = DIAMOND;
+                            c = IRON_COLOR;
+                            BlockType = IRON;
                         }else{
-                            c = new Color(128, 128, 128);
+                            c = ROCK_COLOR;
                             BlockType = ROCK;
                         }
                     }else{
-                        c = new Color(128, 128, 128);
+                        c = ROCK_COLOR;
                         BlockType = ROCK;
                     }
                 }else if (noise[x][y] > 0.4) {
-                    c = new Color(102, 180, 17, 255);
+                    c = GRASS_COLOR;
                     BlockType = GRASS;
                 }else if (noise[x][y] > 0.3) {
-                    c = new Color(197, 201, 25);
+                    c = SAND_COLOR;
                     BlockType = SAND;
                 }else {
-                    c = new Color(0, 0, 255);
+                    String o = String.valueOf(noise[x][y]);
+                    if(Integer.parseInt(o.substring(o.length()-1)) > 2){
+                        c = WATER_COLOR.brighter();
+                    }else{
+                        c = WATER_COLOR;
+                    }
                     BlockType = WATER;
                 }
+
                 image.setRGB(x, y, c.getRGB());
+
                 map[y][x] = BlockType;
             }
             int yy = y + 1;
