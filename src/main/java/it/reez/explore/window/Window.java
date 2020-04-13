@@ -27,7 +27,7 @@ public class Window {
 
         panel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                System.out.println(e.getX() + " : " + e.getY());
+                System.out.println("test");
             }
         });
     }

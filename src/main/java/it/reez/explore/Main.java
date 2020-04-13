@@ -5,6 +5,7 @@ import it.reez.explore.client.ClientHandler;
 import it.reez.explore.client.Rover;
 import it.reez.explore.io.Players;
 import it.reez.explore.io.World;
+import it.reez.explore.noise.Noise;
 import it.reez.explore.window.Window;
 
 import javax.swing.*;
@@ -23,17 +24,14 @@ public class Main extends JFrame {
     public static String[][] map = new String[mapHeight][mapWidth];
     static Map<String, Rover> players = new HashMap<>();
     public final static Gson gson = new Gson();
-    public static float[][] noise;
     final static int port = 1234;
     public static Window win;
 
-    public static void main (String[] args) {
 
+    public static void main (String[] args) {
         players = Players.load();
 
-        noise = Noise.generateSimplexNoise(seed);
-
-        World.generate();
+        World.generate(Noise.generateSimplexNoise(seed, 0, 0));
 
         win = new Window();
         win.updateTitle();

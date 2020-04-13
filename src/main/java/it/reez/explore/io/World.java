@@ -1,18 +1,22 @@
 package it.reez.explore.io;
 
+import it.reez.explore.noise.NoiseClass;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import static it.reez.explore.Main.*;
 import static it.reez.explore.Values.*;
 
 public class World {
-    public static void generate(){
+    public static void generate(NoiseClass noiseclass){
         System.out.println("Generating map...");
+        float[][] noise = noiseclass.noise;
+        int posy = noiseclass.posy;
+        int posx = noiseclass.posx;
         BufferedImage image = new BufferedImage(mapWidth, mapHeight, BufferedImage.TYPE_INT_RGB);
         for(int y = 0; y < mapHeight; y++){
             for(int x = 0; x < mapWidth; x++) {
@@ -50,19 +54,20 @@ public class World {
                     }
                     BlockType = WATER;
                 }
-
                 image.setRGB(x, y, c.getRGB());
 
                 map[y][x] = BlockType;
             }
+            /*
             int yy = y + 1;
             for(char x : String.valueOf(yy).toCharArray()){
                 System.out.print("\b");
             }
             System.out.print(yy);
+             */
         }
         System.out.println("\nSaving...");
-        File imageFile = new File("map.png");
+        File imageFile = new File("./map/"+posy+"x"+posx+".png");
         try {
             ImageIO.write(image, "png", imageFile);
         } catch (IOException e) {

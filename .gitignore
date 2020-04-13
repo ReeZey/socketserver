@@ -1,3 +1,4 @@
 build/**/*
 players.json
 map.png
+map/**/*

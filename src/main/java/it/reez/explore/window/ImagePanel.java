@@ -37,13 +37,6 @@ class ImagePanel extends JPanel
         AffineTransform at = AffineTransform.getTranslateInstance(x,y);
         at.scale(scale, scale);
         g2.drawRenderedImage(image, at);
-/*
-        int imageX = (int) (x * scale), imageY = (int) (x * scale);
-        g2.setColor(new Color(0,0,0,0));
-        g2.drawRect(imageX,imageY,1,1);
-        g2.setColor(new Color(255,0,0,100));
-        g2.drawRect(imageX+2,imageY,1,1);
- */
     }
 
     /**
@@ -65,7 +58,7 @@ class ImagePanel extends JPanel
 
     private void loadImage()
     {
-        String fileName = "map.png";
+        String fileName = "./map/0x0.png";
         try
         {
             image = ImageIO.read(new File(fileName));

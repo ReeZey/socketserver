@@ -76,6 +76,7 @@ public class ClientHandler implements Runnable {
                 dead = true;
             } catch (IOException e) {
                 e.printStackTrace();
+                dead = true;
             }
         }
 

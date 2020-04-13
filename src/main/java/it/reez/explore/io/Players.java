@@ -19,7 +19,7 @@ public class Players {
         try{
             try{
                 File file = new File("players.json");
-                System.out.print("Loading players");
+                System.out.println("Loading players");
                 FileInputStream fis = new FileInputStream(file);
                 byte[] data = new byte[(int) file.length()];
                 fis.read(data);

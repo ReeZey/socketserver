@@ -1,22 +1,24 @@
-package it.reez.explore;
+package it.reez.explore.noise;
 
 
 import static it.reez.explore.Main.mapWidth;
 import static it.reez.explore.Main.mapHeight;
 
 public final class Noise {
-    public static float[][] generateSimplexNoise(int seed){
+    public static NoiseClass generateSimplexNoise(int seed, int posy, int posx){
         float[][] simplexnoise = new float[mapWidth][mapHeight];
+        int offsety = mapHeight * posy;
+        int offsetx = mapWidth * posx;
         float frequency = 5.0f / 500;
 
-        for(int x = 0; x < mapWidth; x++){
-            for(int y = 0; y < mapHeight; y++){
-                simplexnoise[x][y] = noise(x * frequency,y * frequency, seed);
+        for(int y = 0; y < mapHeight; y++) {
+            for (int x = 0; x < mapWidth; x++) {
+                simplexnoise[x][y] = noise((x+offsetx) * frequency, (y+offsety) * frequency, seed);
                 simplexnoise[x][y] = (simplexnoise[x][y] + 1) / 2;   //generate values between 0 and 1
             }
         }
 
-        return simplexnoise;
+        return new NoiseClass(simplexnoise, posy, posx);
     }
 
     public static float noise(float x, float y, float z)
