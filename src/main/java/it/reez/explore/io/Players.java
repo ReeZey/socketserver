@@ -16,10 +16,13 @@ public class Players {
     static Map<String, Rover> players;
     public static Map<String, Rover> load() {
         players = Main.getPlayers();
-        try{
+
+
+        File file = new File("players.json");
+
+        System.out.println("Trying to load players...");
+        if(file.exists()) {
             try{
-                File file = new File("players.json");
-                System.out.println("Loading players");
                 FileInputStream fis = new FileInputStream(file);
                 byte[] data = new byte[(int) file.length()];
                 fis.read(data);
@@ -27,19 +30,22 @@ public class Players {
                 String str = new String(data, UTF_8);
                 Type mapType = new TypeToken<Map<String, Rover>>(){}.getType();
                 players = new Gson().fromJson(str, mapType);
-            }catch(FileNotFoundException notFound){
-                System.err.println(notFound.getMessage());
-                System.err.println("Generating new players");
+                System.out.println("Players loaded successfully");
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }else{
+            try{
+                System.err.println("Players file not found... \nGenerating new players");
                 players.put("test", new Rover("password"));
                 players.put("ris", new Rover("fis"));
                 Writer wr = new OutputStreamWriter(new FileOutputStream("players.json"), UTF_8);
                 wr.write(gson.toJson(players));
                 wr.close();
+            }catch (IOException e){
+                e.printStackTrace();
             }
-        }catch (IOException e){
-            e.printStackTrace();
         }
-
         return players;
     }
 

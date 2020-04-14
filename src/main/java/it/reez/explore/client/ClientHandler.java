@@ -1,6 +1,7 @@
 package it.reez.explore.client;
 
 import it.reez.explore.io.Players;
+import it.reez.explore.io.World;
 
 import java.io.*;
 import java.net.Socket;
@@ -37,6 +38,12 @@ public class ClientHandler implements Runnable {
         while(!dead){
             try {
                 while (true){
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream(), UTF_8));
                     char[] buff = new char[8];
                     in.mark(8);

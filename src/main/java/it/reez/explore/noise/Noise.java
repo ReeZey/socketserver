@@ -1,15 +1,14 @@
 package it.reez.explore.noise;
 
-
 import static it.reez.explore.Main.mapWidth;
 import static it.reez.explore.Main.mapHeight;
 
 public final class Noise {
     public static NoiseClass generateSimplexNoise(int seed, int posy, int posx){
         float[][] simplexnoise = new float[mapWidth][mapHeight];
-        int offsety = mapHeight * posy;
-        int offsetx = mapWidth * posx;
-        float frequency = 5.0f / 500;
+        int offsety = 10000 + (mapHeight * posy);
+        int offsetx = 10000 + (mapWidth * posx);
+        float frequency = 0.01f;
 
         for(int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) {

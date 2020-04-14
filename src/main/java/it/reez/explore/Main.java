@@ -18,23 +18,22 @@ import java.util.Map;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Main extends JFrame {
-    public final static int mapWidth = 800;
-    public final static int mapHeight = 600;
-    public final static int seed = 80;
-    public static String[][] map = new String[mapHeight][mapWidth];
+    public final static int mapWidth = 100;
+    public final static int mapHeight = 100;
+    public final static int seed = 69;
     static Map<String, Rover> players = new HashMap<>();
     public final static Gson gson = new Gson();
     final static int port = 1234;
     public static Window win;
 
-
     public static void main (String[] args) {
-        players = Players.load();
 
         World.generate(Noise.generateSimplexNoise(seed, 0, 0));
 
-        win = new Window();
-        win.updateTitle();
+        players = Players.load();
+
+        //win = new Window();
+        //win.updateTitle();
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server is listening on port " + port);

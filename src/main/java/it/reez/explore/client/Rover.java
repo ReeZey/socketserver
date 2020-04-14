@@ -41,7 +41,6 @@ public class Rover {
 
     public void setOnline(){
         online = !online;
-        win.updateTitle();
     }
 
     public void forward() {
