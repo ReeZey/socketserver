@@ -6,8 +6,8 @@ import static it.reez.explore.Main.mapHeight;
 public final class Noise {
     public static NoiseClass generateSimplexNoise(int seed, int posy, int posx){
         float[][] simplexnoise = new float[mapWidth][mapHeight];
-        int offsety = 10000 + (mapHeight * posy);
-        int offsetx = 10000 + (mapWidth * posx);
+        int offsety = 50000000 + (mapHeight * posy);
+        int offsetx = 50000000 + (mapWidth * posx);
         float frequency = 0.01f;
 
         for(int y = 0; y < mapHeight; y++) {

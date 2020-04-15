@@ -50,7 +50,7 @@ public class World {
             }
         }
         System.out.println("\nSaving...");
-        File imageFile = new File("./map/"+posy+"x"+posx+".png");
+        File imageFile = getMapFile(posy, posx);
         try {
             ImageIO.write(image, "png", imageFile);
         } catch (IOException e) {
@@ -62,18 +62,19 @@ public class World {
     public static String get(int y, int x) {
         int mapy = Math.floorDiv(y, mapHeight), mapx = Math.floorDiv(x, mapWidth);
 
-        File f = new File("./map/" + mapy + "x" + mapx + ".png");
+        File f = getMapFile(mapy, mapx);
         if(!f.exists()){
             generate(Noise.generateSimplexNoise(seed, mapy, mapx));
         }
 
         BufferedImage i = null;
         try {
-            i = ImageIO.read(new File("./map/" + mapy + "x" + mapx + ".png"));
+            i = ImageIO.read(getMapFile(mapy, mapx));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        //cred till alfred
         while(y < 0){
             y += mapHeight;
         }
@@ -86,7 +87,8 @@ public class World {
         while(x > 99){
             x -= mapWidth;
         }
-        int t;
+
+        int t = GRASS_COLOR.getRGB();
         try{
             t = i.getRGB(x, y);
         }catch (NullPointerException e){
@@ -108,5 +110,9 @@ public class World {
             block = WATER;
         }
         return block;
+    }
+
+    public static File getMapFile(int mapy, int mapx){
+        return new File("./map/" + mapy + "x" + mapx + ".png");
     }
 }

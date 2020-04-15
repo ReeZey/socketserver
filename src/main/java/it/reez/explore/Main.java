@@ -27,8 +27,11 @@ public class Main extends JFrame {
     public static Window win;
 
     public static void main (String[] args) {
-
-        World.generate(Noise.generateSimplexNoise(seed, 0, 0));
+        for(int y =-1;y<2;y++){
+            for(int x =-1; x < 2;x++){
+                World.generate(Noise.generateSimplexNoise(seed, y, x));
+            }
+        }
 
         players = Players.load();
 
