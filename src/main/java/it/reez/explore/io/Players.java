@@ -37,7 +37,7 @@ public class Players {
         }else{
             try{
                 System.err.println("Players file not found... \nGenerating new players");
-                players.put("test", new Rover("password"));
+                players.put("alfred", new Rover("nigfag123"));
                 players.put("ris", new Rover("fis"));
                 Writer wr = new OutputStreamWriter(new FileOutputStream("players.json"), UTF_8);
                 wr.write(gson.toJson(players));
@@ -50,7 +50,7 @@ public class Players {
     }
 
     public static void save() {
-        System.out.print("Saving players...");
+        System.out.println("Saving players...");
         players = Main.getPlayers();
         try {
             Writer wr = new OutputStreamWriter(new FileOutputStream("players.json"), UTF_8);

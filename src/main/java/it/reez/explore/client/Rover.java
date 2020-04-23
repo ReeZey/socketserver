@@ -3,6 +3,8 @@ package it.reez.explore.client;
 import it.reez.explore.Main;
 import it.reez.explore.io.World;
 
+import javax.sound.midi.Soundbank;
+
 import static it.reez.explore.Main.*;
 import static it.reez.explore.Values.*;
 
@@ -15,8 +17,8 @@ public class Rover {
         this.password = password;
     }
 
-    public String getPassword() {
-        return password;
+    public boolean validatePassword(String clientPassword) {
+        return password.equals(clientPassword);
     }
 
     public int getX() {

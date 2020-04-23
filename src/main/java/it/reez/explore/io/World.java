@@ -1,7 +1,7 @@
 package it.reez.explore.io;
 
+import it.reez.explore.noise.GenerateNoise;
 import it.reez.explore.noise.Noise;
-import it.reez.explore.noise.NoiseClass;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,10 +13,12 @@ import static it.reez.explore.Main.*;
 import static it.reez.explore.Values.*;
 
 public class World {
-    public static void generate(NoiseClass noiseclass){
-        System.out.println("Generating map...");
-        float[][] noise = noiseclass.noise;
-        int posy = noiseclass.posy, posx = noiseclass.posx;
+    public static void generate(int seed, int posy, int posx){
+
+        Noise n = GenerateNoise.generateSimplexNoise(seed, posy, posx);
+        float[][] noise = n.noise;
+
+        System.out.println("Generating "+ posy + "x" + posx);
         BufferedImage image = new BufferedImage(mapWidth, mapHeight, BufferedImage.TYPE_INT_RGB);
         for(int y = 0; y < mapHeight; y++){
             for(int x = 0; x < mapWidth; x++) {
@@ -49,14 +51,12 @@ public class World {
                 image.setRGB(x, y, c.getRGB());
             }
         }
-        System.out.println("\nSaving...");
         File imageFile = getMapFile(posy, posx);
         try {
             ImageIO.write(image, "png", imageFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Complete");
     }
 
     public static String get(int y, int x) {
@@ -64,7 +64,7 @@ public class World {
 
         File f = getMapFile(mapy, mapx);
         if(!f.exists()){
-            generate(Noise.generateSimplexNoise(seed, mapy, mapx));
+            generate(seed, mapy, mapx);
         }
 
         BufferedImage i = null;
